@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Real Chat - Login {% endblock %}
+
+
+{% block content %}
+
+
+
+<section class="container d-flex justify-content-center align-items-center flex-column mt-5 ">
+  <h1 class="w-100 text-center mb-5">Login</h1>
+    <form action="{{url_for('login')}}" method="POST" class="w-25 d-flex flex-column gap-2">
+        <div class="mb-3">
+          <label for="name" class="form-label">Usuário</label>
+          <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="mb-3">
+          <label for="pwd" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="pwd" name="pwd">
+        </div>
+        <span class="text-center">Ainda não possui conta? <a href="/register">Cadastre-se.</a></span>
+        <button type="submit" class="btn btn-primary w-50 align-self-center mt-3">Entrar</button>
+      </form>
+</section>
+
+
+{% endblock %}
