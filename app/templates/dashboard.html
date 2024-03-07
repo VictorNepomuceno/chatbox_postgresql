@@ -28,7 +28,7 @@
         <header>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                  <a class="navbar-brand" style="cursor: pointer;" href="/dashboard">Real Chat</a>
+                  <a class="navbar-brand" style="cursor: pointer;" href="/dashboard">Real Blog</a>
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                   </button>
@@ -63,6 +63,51 @@
                 </div>
               </nav>
         </header>
+
+        <main class="container h-75 d-flex justify-content-center align-items-center gap-3 mt-4 ">
+            <div class="border rounded d-flex justify-content-center align-items-start h-100 w-50">
+                
+                <form action="{{url_for('create')}}" method="POST" class="w-100 h-50 px-3">
+                    <h2 class="text-center mt-3 mb-5">Criar nova postagem</h2>
+                <div class="mb-3">
+                      <label  for="username" class="form-label ">Usuário</label>
+                      <input type="text" class="form-control" id="username" name="username" value="{{username}}" >
+                </div>
+                <div class="mb-3">
+                  <label for="title" class="form-label">Título da postagem</label>
+                  <input type="text" class="form-control" id="title" name="title" >
+                </div>
+                <div class="form-floating mb-3 h-75">
+                    <textarea class="form-control h-100" placeholder="Digite aqui o conteúdo da sua postagem" id="chat" name="chat"></textarea>
+                    <label for="chat">Post</label>
+                  </div>
+                  <div class="d-flex w-100 justify-content-center mt-4 ">
+                    <button type="submit" class="btn btn-primary w-50">Postar</button>
+                  </div>
+              </form></div>
+            <div class="border rounded d-flex justify-content-center align-items-sm-start h-100 w-100">
+                
+                <div class="d-flex flex-column w-100">
+                    <h2 class="text-center mt-4">Postagens</h2>
+
+                    {% for d in data %}
+
+                    <div class="text-start p-3 d-flex flex-column border m-2 rounded">
+                        <h4 ><span class="fs-5 text-secondary">Título da postagem:</span> {{d.title}}</h4>
+                        <h4><span class="fs-5 text-secondary">Postado por:</span> {{d.username}}</h4>
+                        <h3><span class="fs-5 text-secondary">Post:</span> {{d.chat}}</h3>
+                        
+                    </div>
+
+
+                    {% endfor %}
+
+                </div>
+            </div>
+        </main>
+
+
+
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages  %}
@@ -81,7 +126,6 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-        <main class="container h-75 d-flex justify-content-center align-items-center "></main>
         
     </body>
 </html>

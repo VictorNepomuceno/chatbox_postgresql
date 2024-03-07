@@ -46,7 +46,35 @@ def register():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    data = Chat.query.all()
+    return render_template('dashboard.html', username=current_user.name, data=data)
+
+@app.route('/create', methods=['GET', 'POST'])
+@login_required
+def create():
+    if request.method == 'POST':
+        title = request.form['title']
+        chat = request.form['chat']
+        username = request.form['username']
+        data = Chat(username=username,title=title, chat=chat )
+        db.session.add(data)
+        db.session.commit()
+        flash('Postagem feita com sucesso!', 'success')
+        return redirect(url_for('dashboard'))
     return render_template('dashboard.html', username=current_user.name)
+
+
+@app.route('/delete', methods=['GET', 'DELETE'])
+@login_required
+def delete():
+    return render_template('dashboard.html', username=current_user.name)
+
+
+@app.route('/edit', methods=['GET', 'PUT'])
+@login_required
+def edit():
+    return render_template('dashboard.html', username=current_user.name)
+
 
 @app.route('/logout')
 @login_required

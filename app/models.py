@@ -23,9 +23,14 @@ class User(db.Model, UserMixin):
 
 class Chat(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    chat = db.Column(db.String(500))
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    title = db.Column(db.String(150), nullable=False)
+    chat = db.Column(db.String(500), nullable=False)
 
-    def __init__(self, chat):
+    def __init__(self,username,title, chat):
+
+        self.username = username
+        self.title = title
         self.chat = chat
 
 
