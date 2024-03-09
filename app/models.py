@@ -1,6 +1,7 @@
 from app import db, login_manager
 from flask_login import UserMixin
 import bcrypt
+from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -23,9 +24,11 @@ class User(db.Model, UserMixin):
 
 class Chat(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(150), unique=True, nullable=False)
+    username = db.Column(db.String(150), nullable=False)
     title = db.Column(db.String(150), nullable=False)
-    chat = db.Column(db.String(500), nullable=False)
+    chat = db.Column(db.String(1500), nullable=False)
+    comments = db.relationship('Comment', backref='post', lazy=True)
+
 
     def __init__(self,username,title, chat):
 
@@ -33,5 +36,17 @@ class Chat(db.Model):
         self.title = title
         self.chat = chat
 
-
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    post_id = db.Column(db.Integer, db.ForeignKey('chat.id'), nullable=False)
+    username = db.Column(db.String(150), nullable=False)
+    comment = db.Column(db.String(1000), nullable=False)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    def __init__(self, post_id, username, comment):
+        self.post_id = post_id
+        self.username = username
+        self.comment = comment
+        self.date = datetime.utcnow().strftime('%d/%m/%Y %H:%M')
+    
 db.create_all()

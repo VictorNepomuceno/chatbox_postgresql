@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %} Real Blog - {{post.title}} {% endblock %}
+
+
+{%block header%}
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+    <a class="navbar-brand" style="cursor: pointer;" href="/feed">Real Blog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/feed">Feed</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/new_post">Postar</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile', username=post.username)}}">Meu perfil</a>
+        </li>
+        </ul>
+        <span class="navbar-text">
+        <div class="btn-group dropstart">
+            <a href="/logout" type="button" class="btn btn-danger">Sair</a>
+            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/feed">Feed</a></li>
+            <li><a class="dropdown-item" href="/new_post">Postar</a></li>
+            <li><a class="dropdown-item" href="/my_profile">Meu Perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/logout">Sair</a></li>
+            </ul>
+        </div>
+        </span>
+    </div>
+    </div>
+</nav>
+{%endblock%}
+
+{% block content %}
+<div class="h-100 w-100">
+                
+    <div class="d-flex flex-column w-100 h-auto mt-5">
+        <h2 class="text-start pt-5">{{post.title}}</h2>
+        <div class="d-flex flex-column w-100 h-100 py-3 mt-3">
+            <div class="border p-3 rounded shadow-lg d-flex flex-column gap-2 h-100">
+                <span class="text-secondary">Postado por: <a href="{{url_for('profile', username=post.username)}}">{{post.username}}</a></span>
+                <span class="text-secondary">Post:</span>
+                <p>{{post.chat}}</p>
+            </div>
+            <div class="mt-4">
+               <h3>Comentários</h3>
+               {% if comment %}
+
+               <div class="mt-3 w-100 shadow-lg rounded border p-3 d-flex flex-column gap-2">
+                {% for c in comment %}
+                    <div class="d-flex gap-2">
+                        <span>{{c.date}}</span>
+                        <span>{{c.username}}:</span>
+                        <p>{{c.comment}}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <span class="text-secondary">Ainda não possui comentários. Seja o primeiro a comentar neste post! =D</span>
+            {% endif %}
+            </div>
+            <div class="w-100 position-fixed fixed-bottom d-flex justify-content-center mb-3">
+                <form class="form-floating w-50 align-self-center d-flex  gap-5" action="{{url_for('post_detail', id=post.id)}}" method="POST">
+                    <input style="z-index: -99; opacity: 0;" type="text" class="position-absolute" name="name" value="{{user.name}}">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="comment"></textarea>
+                    <label for="floatingTextarea">Comments</label>
+                    <button  class="btn btn-primary fs-6">Comentar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+

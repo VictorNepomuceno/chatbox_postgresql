@@ -26,61 +26,30 @@
       }
     </style>
     <body class="h-100">
-        <header>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-                  <a class="navbar-brand" style="cursor: pointer;" href="/">Real Blog</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/">Login</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/register">Cadastro</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/about">Sobre nós</a>
-                      </li>
-                    </ul>
-                    <span class="navbar-text">
-<div class="btn-group dropstart">
-  <button type="button" class="btn btn-primary">Informações</button>
-  <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-    <span class="visually-hidden">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/">Início</a></li>
-    <li><a class="dropdown-item" href="/about">Sobre nós</a></li>
-    <li><a class="dropdown-item" href="/about">FAQ</a></li>
-  </ul>
-</div>
-                    </span>
-                  </div>
-                </div>
-              </nav>
-        </header>
-        
-        <main class="container h-75 d-flex justify-content-center align-items-center ">{% block content %} {% endblock %}</main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages  %}
+      <header>
+        {% block header %}
 
-        <div class="d-flex flex flex-column align-items-center justify-content-center w-100 mt-5">
-          <div class="w-75 text-center alert {% if category == 'success'%} alert-success {% elif category == 'error' %} alert-danger {% endif %} alert-dismissible fade show" role="alert">{{message}}
-            <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-              ></button>
-          </div>
+        {% endblock %}
+      </header>
+      
+      <main class="container h-100 d-flex justify-content-center align-items-center">{% block content %} {% endblock %}</main>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages  %}
+
+      <div class="d-flex flex flex-column align-items-center justify-content-center w-100 mt-5 position-absolute fixed-bottom z-3">
+        <div class="w-75 text-center alert {% if category == 'success'%} alert-success {% elif category == 'error' %} alert-danger {% endif %} alert-dismissible fade show" role="alert">{{message}}
+          <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+            ></button>
         </div>
+      </div>
 
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
     </body>
 </html>

@@ -1,0 +1,66 @@
+{%extends 'base.html' %}
+{% block title %} Real Blog - Postar {% endblock %}
+{%block header%}
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+  <a class="navbar-brand" style="cursor: pointer;" href="/feed">Real Blog</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/feed">Feed</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="/new_post">Postar</a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{{url_for('profile', username=username)}}">Meu perfil</a>
+      </li>
+      </ul>
+      <span class="navbar-text">
+      <div class="btn-group dropstart">
+          <a href="/logout" type="button" class="btn btn-primary">{{username}}</a>
+          <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="/feed">Feed</a></li>
+          <li><a class="dropdown-item" href="/new_post">Postar</a></li>
+          <li><a class="dropdown-item" href="/my_profile">Meu Perfil</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="/logout">Sair</a></li>
+          </ul>
+      </div>
+      </span>
+  </div>
+  </div>
+</nav>
+{%endblock%}
+{% block content %}
+<div class="border shadow-lg rounded d-flex justify-content-center align-items-start h-auto w-75 mt-5 pt-5">
+        
+  <form action="{{url_for('create')}}" method="POST" class="w-100 h-100  px-3">
+      <h2 class="text-center mt-3 mb-5">Criar nova postagem</h2>
+  <div class="d-flex w-100 justify-content-between   gap-5 flex-row-reverse">
+    <div class="mb-3 w-25">
+          <label  for="username" class="form-label ">Usuário</label>
+          <input type="text" class="form-control" id="username" name="username" readonly required value="{{username}}" >
+    </div>
+    <div class="mb-3 w-75 ">
+      <label for="title" class="form-label">Título da postagem</label>
+      <input type="text" class="form-control" id="title" name="title" required >
+    </div>
+  </div>
+  <div class="form-floating mb-3 h-100">
+      <textarea class="form-control h-100" rows="10" placeholder="Digite aqui o conteúdo da sua postagem" required id="chat" name="chat"></textarea>
+      <label for="chat">Post</label>
+    </div>
+    <div class="d-flex w-100 justify-content-center my-4 ">
+      <button type="submit" class="btn btn-primary w-25">Postar</button>
+    </div>
+  </form>
+</div>
+{%endblock%}
+        
